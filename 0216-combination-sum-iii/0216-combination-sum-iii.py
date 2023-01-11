@@ -1,21 +1,20 @@
 class Solution:
     def combinationSum3(self, k: int, n: int) -> List[List[int]]:
-        ans = []
-        path = []
-        
-        def dp(idx, total):
-            if len(path) > k:
+
+        def dfs(i, cur):
+                        
+            if sum(cur)  > n  or len(cur)  > k:    
                 return
-            if total > n:
+            if sum(cur) == n and len(cur) == k: 
+                res.append(cur.copy())
                 return
-            if total == n and len(path) == k:
-                ans.append(path.copy())
-                return 
-                
-            for i in range(idx, 10):
-                path.append(i)
-                dp(i+1, total + i)
-                path.pop()
-        
-        dp(1, 0)
-        return  ans
+            
+            for j in range(i, len(nums)):      
+                el = nums[j]                    
+                dfs(j + 1, cur + [el])       
+
+        res    = []
+        nums   = [i   for i in range(1, 10)]   
+        dfs(0, [])
+
+        return res
