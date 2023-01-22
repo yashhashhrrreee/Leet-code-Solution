@@ -1,17 +1,17 @@
 class Solution:
     def findUnsortedSubarray(self, nums: List[int]) -> int:
-        queue = collections.deque([[n, n, n] for n in nums]) 
-        for i in range(1, len(nums)):
-            queue[i][1] = max(queue[i-1][1], nums[i])
+        n = len(nums)
+        arr = nums[:]
+        arr.sort()
         
-        for i in range(len(nums)-2, -1, -1):
-            queue[i][2] = min(queue[i+1][2], nums[i])
-            
-        while queue and queue[0][1] == queue[0][2]:
-            queue.popleft()
+        lo, hi = 0, n - 1
+        cnt = 0
+        while lo <= hi and nums[lo] == arr[lo]:
+            cnt += 1
+            lo += 1
         
-        while queue and queue[-1][1] == queue[-1][2]:
-            queue.pop()
-                
-        return len(queue)
+        while hi >= lo and nums[hi] == arr[hi]:
+            cnt += 1
+            hi -= 1
             
+        return n - cnt
